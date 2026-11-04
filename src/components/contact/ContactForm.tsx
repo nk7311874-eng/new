@@ -33,6 +33,14 @@ export default function ContactForm() {
     setStatus('submitting');
     setServerError('');
 
+    if (!supabase) {
+      setStatus('error');
+      setServerError(
+        'The contact form is not configured yet. Please use the email or WhatsApp links beside this form.',
+      );
+      return;
+    }
+
     const { error } = await supabase.from('contact_messages').insert({
       name: values.name.trim(),
       email: values.email.trim(),
